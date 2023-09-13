@@ -28,7 +28,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<NestedScreen> screens = [];
-  List<BottomNavigationBarItem> pages = [];
+  List<BottomNavigationBarItem> menu = [];
   List<GlobalKey<NavigatorState>> keys = [];
 
   int _selectedIndex = 0;
@@ -40,9 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (pages.isEmpty) {
+    if (menu.isEmpty) {
       //Even if we do this, it seems to reset the state of the Navigator, but that's ok
-      pages = <BottomNavigationBarItem>[
+      menu = <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
@@ -56,11 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
           label: 'School',
         ),
       ];
-      for (var page in pages) {
+      for (var item in menu) {
         GlobalKey<NavigatorState> key = GlobalKey();
         keys.add(key);
         screens.add(NestedScreen(
-          title: page.label ?? 'Home',
+          title: item.label ?? 'Home',
           navigatorKey: key,
         ));
       }
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items: pages,
+        items: menu,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
