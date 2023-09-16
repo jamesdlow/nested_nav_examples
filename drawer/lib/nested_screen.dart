@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //https://techblog.geekyants.com/nested-navigation-in-flutter-navigator-widget
 
 class NavigatorKeys {
-  static final GlobalKey<NavigatorState> navigatorKeyMain = GlobalKey();
+  static final GlobalKey<NavigatorState> globalKey = GlobalKey();
 }
 
 class NestedScreen extends StatelessWidget {
@@ -11,15 +11,16 @@ class NestedScreen extends StatelessWidget {
   //final GlobalKey<NavigatorState> topKey = GlobalKey();
   final GlobalKey<NavigatorState> navigatorKey;
   String title;
-  NestedScreen({required this.navigatorKey, Key? key, this.title = ''}) : super(key: key);
+  bool global = false;
+  NestedScreen({required this.navigatorKey, Key? key, this.title = '', this.global = false}) : super(key: key);
 
   void _push(BuildContext context, String name) {
-    //NavigatorKeys.navigatorKeyMain.currentContext;
     //navigatorKey.currentContext
-    Navigator.of(context).push(
+    BuildContext open = (global ? NavigatorKeys.globalKey.currentContext : context) ?? context;
+    Navigator.of(open).push(
       MaterialPageRoute(
-        builder: (context) {
-          return page(context: context, name: name, backbutton: true);
+        builder: (open) {
+          return page(context: open, name: name, backbutton: true);
         }
       ),
     );
@@ -39,6 +40,7 @@ class NestedScreen extends StatelessWidget {
     };*/
 
     return Scaffold(
+      //appBar: global ? AppBar(title: Text(title)) : null,
       body: Navigator(
         key: navigatorKey,
         initialRoute: ROOT,
@@ -54,16 +56,16 @@ class NestedScreen extends StatelessWidget {
     );
   }
 
-  Widget page({required BuildContext context, required String name, bool backbutton = false}) {
+  Widget page({required BuildContext context, required String name, bool backbutton = false, bool appbar = true}) {
     var child = name + ' → Child';
     return Scaffold(
-      appBar: AppBar(
+      appBar: appbar ? AppBar(
         title: Text(name),
         leading: backbutton ? IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.keyboard_arrow_left_outlined),
         ) : null
-      ),
+      ) : null,
       body: Center(
         child: GestureDetector(
           onTap: () => _push(context, child),
@@ -74,6 +76,6 @@ class NestedScreen extends StatelessWidget {
   }
 
   Widget home(BuildContext context) {
-    return page(context: context, name: title);
+    return page(context: context, name: title, appbar: !global);
   }
 }

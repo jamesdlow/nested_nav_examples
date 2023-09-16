@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
-      navigatorKey: NavigatorKeys.navigatorKeyMain,
+      navigatorKey: NavigatorKeys.globalKey,
     );
   }
 }

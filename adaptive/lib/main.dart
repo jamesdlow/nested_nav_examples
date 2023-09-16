@@ -14,15 +14,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: MyHomePage(drawer: true),
       debugShowCheckedModeBanner: false,
-      navigatorKey: NavigatorKeys.navigatorKeyMain,
+      navigatorKey: NavigatorKeys.globalKey,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key});
+  bool drawer = false;
+  MyHomePage({super.key, this.drawer = false});
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -35,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var global = widget.drawer && Breakpoints.small.isActive(context);
     if (menu.isEmpty) {
       //Even if we do this, it seems to reset the state of the Navigator, but that's ok
       menu = <NavigationDestination>[
@@ -57,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
         screens.add(NestedScreen(
           title: item.label ?? '',
           navigatorKey: key,
+          global: global
         ));
       }
     }
@@ -68,9 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
       mediumBreakpoint: const WidthPlatformBreakpoint(begin: 700, end: 900),
       largeBreakpoint: const WidthPlatformBreakpoint(begin: 900),
       internalAnimations: false,
-      useDrawer: false,
+      useDrawer: widget.drawer,
       selectedIndex: _selectedIndex,
       onSelectedIndexChange: (int index) {
+        if (global) {
+          Navigator.pop(context);
+        }
         setState(() {
           _selectedIndex = index;
         });
