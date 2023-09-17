@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(drawer: true),
+      home: MyHomePage(drawer: false),
       debugShowCheckedModeBanner: false,
       navigatorKey: NavigatorKeys.globalKey,
     );
@@ -82,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       },
       destinations: menu,
+      appBar: global ? AppBar(title: Text(menu[_selectedIndex].label)) : null,
       body: (_) {
         return screens[_selectedIndex];
       },
