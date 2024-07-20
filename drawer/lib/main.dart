@@ -32,17 +32,17 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   List<NestedScreen> screens = [];
   List<ListTile> menu = [];
   List<GlobalKey<NavigatorState>> keys = [];
@@ -61,18 +61,18 @@ class _MyHomePageState extends State<MyHomePage> {
       //Even if we do this, it seems to reset the state of the Navigator, but that's ok
       menu = <ListTile>[
         ListTile(
-          leading: Icon(Icons.home),
-          title: Text('Home'),
+          leading: const Icon(Icons.home),
+          title: const Text('Home'),
           onTap: () { _onItemTapped(0); }
         ),
         ListTile(
-          leading: Icon(Icons.business),
-          title: Text('Business'),
+          leading: const Icon(Icons.business),
+          title: const Text('Business'),
           onTap: () { _onItemTapped(1); }
         ),
         ListTile(
-          leading: Icon(Icons.school),
-          title: Text('School'),
+          leading: const Icon(Icons.school),
+          title: const Text('School'),
           onTap: () { _onItemTapped(2); }
         )
       ];
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nested Navigation'),
+        title: const Text('Nested Navigation'),
       ),
       drawer: Drawer(
         child: ListView(

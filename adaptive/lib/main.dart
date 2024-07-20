@@ -3,10 +3,11 @@ import 'nested_screen.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(drawer: false),
+      home: const MyHomePage(drawer: false),
       debugShowCheckedModeBanner: false,
       navigatorKey: NavigatorKeys.globalKey,
     );
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  bool drawer = false;
-  MyHomePage({super.key, this.drawer = false});
+  final bool drawer;
+  const MyHomePage({super.key, this.drawer = false});
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -40,15 +41,15 @@ class _MyHomePageState extends State<MyHomePage> {
     if (menu.isEmpty) {
       //Even if we do this, it seems to reset the state of the Navigator, but that's ok
       menu = <NavigationDestination>[
-        NavigationDestination(
+        const NavigationDestination(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
-        NavigationDestination(
+        const NavigationDestination(
           icon: Icon(Icons.business),
           label: 'Business',
         ),
-        NavigationDestination(
+        const NavigationDestination(
           icon: Icon(Icons.school),
           label: 'School',
         ),
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         GlobalKey<NavigatorState> key = GlobalKey();
         keys.add(key);
         screens.add(NestedScreen(
-          title: item.label ?? '',
+          title: item.label,
           navigatorKey: key,
           global: global
         ));

@@ -7,12 +7,12 @@ class NavigatorKeys {
 }
 
 class NestedScreen extends StatelessWidget {
-  static const String ROOT = '/';
+  static const String root = '/';
   //final GlobalKey<NavigatorState> topKey = GlobalKey();
   final GlobalKey<NavigatorState> navigatorKey;
-  String title;
-  bool global = false;
-  NestedScreen({required this.navigatorKey, Key? key, this.title = '', this.global = false}) : super(key: key);
+  final String title;
+  final bool global;
+  const NestedScreen({super.key, required this.navigatorKey, this.title = '', this.global = false});
 
   void _push(BuildContext context, String name) {
     //navigatorKey.currentContext
@@ -43,7 +43,7 @@ class NestedScreen extends StatelessWidget {
       //appBar: global ? AppBar(title: Text(title)) : null,
       body: Navigator(
         key: navigatorKey,
-        initialRoute: ROOT,
+        initialRoute: root,
         /// Starting route from the onGenerateRoute map
         onGenerateRoute: (routeSettings) {
           /// Generate the route we want
@@ -57,19 +57,19 @@ class NestedScreen extends StatelessWidget {
   }
 
   Widget page({required BuildContext context, required String name, bool backbutton = false, bool appbar = true}) {
-    var child = name + ' → Child';
+    var child = "$name → Child";
     return Scaffold(
       appBar: appbar ? AppBar(
         title: Text(name),
         leading: backbutton ? IconButton(
           onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(Icons.keyboard_arrow_left_outlined),
+          icon: const Icon(Icons.keyboard_arrow_left_outlined),
         ) : null
       ) : null,
       body: Center(
         child: GestureDetector(
           onTap: () => _push(context, child),
-          child: Text(child, style: TextStyle(fontSize: 50))
+          child: Text(child, style: const TextStyle(fontSize: 50))
         )
       )
     );

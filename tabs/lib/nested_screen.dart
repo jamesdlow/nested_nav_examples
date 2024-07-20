@@ -10,9 +10,9 @@ class NestedScreen extends StatelessWidget {
   static const String ROOT = '/';
   //final GlobalKey<NavigatorState> topKey = GlobalKey();
   final GlobalKey<NavigatorState> navigatorKey;
-  String title;
-  bool global = false;
-  NestedScreen({required this.navigatorKey, Key? key, this.title = '', this.global = false}) : super(key: key);
+  final String title;
+  final bool global;
+  NestedScreen({super.key, required this.navigatorKey, this.title = '', this.global = false});
 
   void _push(BuildContext context, String name) {
     //navigatorKey.currentContext
